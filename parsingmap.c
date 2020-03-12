@@ -74,20 +74,40 @@ char	**get_map(char **tab)
 
 int main(void)
 {
-	t_info info;
-	char 	**map;
+	t_info 	info;
+	char 	**tab;
 	void	*mlx_ptr;
 	void	*win_ptr;
-	t_pos pos;
+	double 	cameraX;
+	double perpwalldist;
+	int i;
+	int hit;
+	int side ;
+	t_resolution step;
+	t_resolution map;
+	t_dir sidedist;
+	t_dir deltadist;
 
+	i = 0;
     info = parsing(tab());
-	//mlx_ptr = mlx_init();
-	//win_ptr = mlx_new_window(mlx_ptr, info.res.x, info.res.y, "TEST");
-	//mlx_loop(mlx_ptr);
-	map = get_map(tab());
-	pos = get_pos(map);
-	printf("%d\n", pos.x);
-	printf("%d\n", pos.y);
+	tab = get_map(tab());
+	info.pos = get_pos(map);
+	mlx_ptr = mlx_init();
+	win_ptr = mlx_new_window(mlx_ptr, info.res.x, info.res.y, "Cub3d");
+	while (i < info.res.y)
+	{
+		cameraX = (2 * i) / (double)info.res.y - 1;
+		info.raydir.y = info.dir.x + (info.plane.x * cameraX);
+		info.raydir.x = info.dir.y + info.plane.y
+	}
+	deltadist.y = (1 / info.raydir.y);
+	deltadist.x = (1 / info.raydir.x);
+	if (info.raydir.y < 0)
+	{
+		step.x = 1;
+		sidedist.y = ()
+	}
+	mlx_loop(mlx_ptr);
     /*printf("%d\n", info.res.x);
 	printf("%d\n", info.res.y);
 	printf("%s\n", info.text.ea);
@@ -100,6 +120,15 @@ int main(void)
 
     return (0);
 }
-
 // free info.text
 // afficher messages d'erreurs
+
+/*int	display(t_info info, char **map)
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+
+	mlx_ptr = mlx_init();
+	win_ptr = mlx_new_window(mlx_ptr, info.res.x, info.res.y, "TEST");
+	mlx_loop(mlx_ptr);
+}*/

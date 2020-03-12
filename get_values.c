@@ -124,5 +124,11 @@ t_info		get_values(char **tab)
 	info.text.s = get_value_path(tab, "S ", 2);
 	info.f = get_value_color(tab, "F ", 2);
 	info.c = get_value_color(tab, "C ", 2);
+	info.dir.x = -1.0;
+	info.dir.y = 0.0;
+	info.plane.x = 0.0;
+	info.plane.y = 0.66;
+	info.time.x = 0;
+	info.time.y = 0;
 	return (info);
 }

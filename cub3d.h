@@ -31,14 +31,6 @@ typedef struct	s_f
 	int z;
 }				t_f;
 
-typedef struct	s_info
-{
-	t_resolution res;
-	t_textures text;
-	t_f f;
-	t_f c;
-}				t_info;
-
 typedef struct	s_pos
 {
 	int	x;
@@ -46,18 +38,40 @@ typedef struct	s_pos
 	char orientation;
 }				t_pos;
 
+typedef struct	s_dir
+{
+	double x;
+	double y;
+}				t_dir;
+
+typedef struct	s_info
+{
+	t_resolution res;
+	t_textures text;
+	t_f f;
+	t_f c;
+	t_dir pos;
+	t_dir dir;
+	t_dir plane;
+	t_dir time;
+	t_dir raydir;
+}				t_info;
+
 int     verif_tab(char **tab);
 int		verif_info(char **tab);
+char	**get_map(char **tab);
 char	*ft_strdup_no_space(const char *s1);
 char	*ft_strdup_num(const char *s1);
 char	*skip_spaces(char *str);
 char	*skip_nbr(char *str);
 char	*skip_coma(char *str);
+int		char_space(char c);
+int		char_floor(char c);
 int		check_nbr(char *str);
 int		verif_map(char **tab);
 t_info	info_init(void);
 t_info	get_values(char **tab);
-t_pos get_pos(char **map);
+t_dir get_pos(char **map);
 
 
 

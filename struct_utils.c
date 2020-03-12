@@ -42,9 +42,10 @@ char	get_orientation(char **tab)
 	return ((char)0);
 }
 
-t_pos get_pos(char **map)
+t_dir get_pos(char **map)
 {
 	t_pos pos;
+	t_dir final_pos;
 
 	pos.x = 0;
 	pos.y = 0;
@@ -54,9 +55,15 @@ t_pos get_pos(char **map)
 		while (map[pos.y][pos.x] != pos.orientation && map[pos.y][pos.x] != '\0')
 			pos.x++;
 		if (map[pos.y][pos.x] == pos.orientation)
-			return (pos);
+		{
+			final_pos.x = (double)pos.x;
+			final_pos.y = (double)pos.y;
+			return (final_pos);
+		}
 		pos.x = 0;
 		pos.y++;
 	}
-	return (pos);
+	final_pos.x = (double)pos.x;
+	final_pos.y = (double)pos.y;
+	return (final_pos);
 }

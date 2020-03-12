@@ -48,30 +48,79 @@ int	verif_space(char **tab, int i)
 
 	j = 0;
 	tab_cpy = tab[i];
-	tab_cpy = skip_spaces(tab_cpy);
 	while (tab_cpy[j] != '\0')
 	{
-		if (tab_cpy[j] == 'X')
+		if (tab_cpy[j] == ' ')
 		{
-			if ((tab_cpy[j - 1] == '1' || tab_cpy[j - 1] == ' ') && (tab_cpy[j + 1] == '1' || tab_cpy[j + 1] == ' ')
-			&& (tab[i + 1][j] == '1' || tab[i + 1][j] == ' ') && (tab[i - 1][j] == '1' || tab[i - 1][j] == ' '))
-				j++;
-			else
+			if (char_space(tab_cpy[j + 1]) == 0)
 				return (0);
+			if (ft_strlen(tab[i + 1]) >= ft_strlen(tab[i]))
+			{
+				if (char_space(tab[i + 1][j]) == 0)
+					return (0);
+			}
+			if (ft_strlen(tab[i - 1]) >= ft_strlen(tab[i]))
+			{
+				if (char_space(tab[i - 1][j]) == 0)
+					return (0);
+			}
+			if (j > 0 && char_space(tab_cpy[j - 1]) == 0)
+					return (0);
 		}
 		j++;
 	}
 	return (1);
 }
 
-int	value_map(char **tab)
+int	verif_floor(char **tab, int i)
+{
+	char *tab_cpy;
+	int j;
+
+	j = 0;
+	tab_cpy = tab[i];
+	while (tab_cpy[j] != '\0')
+	{
+		if (tab_cpy[j] == '0')
+		{
+			if ((char_floor(tab_cpy[j - 1]) == 1) && (char_floor(tab_cpy[j + 1]) == 1) && (char_floor(tab[i + 1][j]) == 1)
+			&& (char_floor(tab[i - 1][j]) == 1))
+				j++;
+			else
+			{
+				printf("ZERO str = %s x = %d y = %d\n", tab[i - 1], j, i - 1);
+				printf("ZERO str = %s x = %d y = %d\n", tab_cpy, j, i);
+				printf("ZERO str = %s x = %d y = %d\n", tab[i + 1], j, i + 1);
+				return (0);
+			}
+		}
+		j++;
+	}
+	return (1);
+}
+
+int	get_value_map(char **map)
 {
 	int i;
 
 	i = 0;
-	while (ft_atoi(tab[i]) == 0)
+	while (map[i] != NULL)
 		i++;
 	return (i);
+}
+
+int	char_floor(char c)
+{
+	if (c == '0' || c == '1' || c == '2' || c == 'S' || c == 'N' || c == 'E' || c == 'W' || c == '\0' || c == '\n')
+		return (1);
+	return (0);
+}
+
+int	char_space(char c)
+{
+	if (c == ' ' || c == '1' || c == '\0' || c == '\n')
+		return (1);
+	return (0);
 }
 
 int	verif_map(char **tab)
@@ -80,17 +129,13 @@ int	verif_map(char **tab)
 	int j;
 
 	i = 0;
-	j = value_map(tab);
-	while (tab[i] != NULL)
-		i++;
-	i--;
+	j = get_value_map(tab);
 	if (verif_line(tab[i]) == 0)
 		return (0);
-	i--;
-	while (verif_line_in(tab[i]) == 1 && verif_space(tab, i) == 1)
-		i--;
 	i++;
-	if (verif_line(tab[i]) == 0 || i != j)
+	while (tab[i + 1] != NULL && verif_line_in(tab[i]) == 1 && verif_space(tab, i) == 1 && verif_floor(tab, i) == 1)
+		i++;
+	if (verif_line(tab[i]) == 0 || i != (j - 1))
 		return (0);
 	return (1);
 }

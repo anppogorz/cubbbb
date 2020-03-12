@@ -99,7 +99,7 @@ int     verif_tab(char **tab)
 		return (0);
 	if (verif_info(tab) == 0)
 		return (0);
-	if (verif_map(tab) == 0)
+	if (verif_map(get_map(tab)) == 0)
 		return (0);
 	return (1);
 }
